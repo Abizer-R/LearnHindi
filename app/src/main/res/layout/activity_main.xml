@@ -16,6 +16,12 @@
         android:layout_centerInParent="true" >
 
         <TextView
+            android:text="asfsdfasfsda"
+            style="@style/CategoryStyle"
+            android:background="@drawable/rounded_corner"
+            android:backgroundTint="@color/color_numbers"/>
+
+        <TextView
             android:id="@+id/numbersTextView"
             android:text="@string/numbers"
             style="@style/CategoryStyle"
