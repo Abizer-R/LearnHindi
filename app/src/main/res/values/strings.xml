@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">LearnHindi</string>
+    <string name="numbers">Numbers</string>
+    <string name="family">Family Members</string>
+    <string name="colors">Colors</string>
+    <string name="phrases">Phrases</string>
+</resources>
