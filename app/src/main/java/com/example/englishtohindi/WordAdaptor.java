@@ -19,10 +19,13 @@ import java.util.ArrayList;
 public class WordAdaptor extends ArrayAdapter<Word> {
 
     private int colorReference;
+
     public WordAdaptor(Activity context, ArrayList<Word> words, int colorReference) {
         super(context, 0, words);
         this.colorReference = colorReference;
     }
+
+
 
     @NonNull
     @Override

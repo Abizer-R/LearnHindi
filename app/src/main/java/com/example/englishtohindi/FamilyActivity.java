@@ -2,6 +2,8 @@ package com.example.englishtohindi;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -12,15 +14,40 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 public class FamilyActivity extends AppCompatActivity {
+
     private ArrayList<Word> family;
-    private ListView familyListView;
+
     private MediaPlayer audio;
-    private MediaPlayer.OnCompletionListener audioCompleted = new MediaPlayer.OnCompletionListener() {
+
+    private final MediaPlayer.OnCompletionListener audioCompleted = new MediaPlayer.OnCompletionListener() {
         @Override
         public void onCompletion(MediaPlayer mediaPlayer) {
             releaseMediaPlayer();
         }
     };
+
+    private AudioManager mAudioManager;
+
+    AudioManager.OnAudioFocusChangeListener mOnAudioFocusChangeListener =
+            new AudioManager.OnAudioFocusChangeListener() {
+                public void onAudioFocusChange(int focusChange) {
+                    if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
+                        // Permanent loss of audio focus
+                        // stop playback and release the resources
+                        releaseMediaPlayer();
+                    }
+                    else if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT ||
+                            focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
+                        // Pause playback
+                        audio.pause();
+                        audio.seekTo(0);
+                    } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
+                        // Your app has been granted audio focus again
+                        // resume playback
+                        audio.start();
+                    }
+                }
+            };
 
     @Override
     protected void onStop() {
@@ -32,6 +59,8 @@ public class FamilyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.word_list_layout);
+
+        mAudioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
 
         family = new ArrayList<>();
         family.add(new Word("father", "पिता ", R.drawable.family_father, R.raw.family_father));
@@ -49,7 +78,7 @@ public class FamilyActivity extends AppCompatActivity {
 
         WordAdaptor familyWordAdaptor = new WordAdaptor(this, family, R.color.color_family);
 
-        familyListView = findViewById(R.id.wordListView);
+        ListView familyListView = findViewById(R.id.wordListView);
         familyListView.setAdapter(familyWordAdaptor);
 
         familyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -58,10 +87,23 @@ public class FamilyActivity extends AppCompatActivity {
                 Word currWord = family.get(i);
 
                 releaseMediaPlayer();
-                audio = MediaPlayer.create(FamilyActivity.this, currWord.getAudioResourcId());
-                audio.start();
 
-                audio.setOnCompletionListener(audioCompleted);
+                int result = mAudioManager.requestAudioFocus(mOnAudioFocusChangeListener,
+                        // Use the music stream.
+                        AudioManager.STREAM_MUSIC,
+                        // Request focus.
+                        AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+
+                if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+                    // We have audio focus now
+
+                    audio = MediaPlayer.create(FamilyActivity.this, currWord.getAudioResourcId());
+                    audio.start();
+
+                    audio.setOnCompletionListener(audioCompleted);
+                }
+
+
             }
         });
 
@@ -73,5 +115,7 @@ public class FamilyActivity extends AppCompatActivity {
             audio.release();
 
         audio = null;
+
+        mAudioManager.abandonAudioFocus(mOnAudioFocusChangeListener);
     }
 }
