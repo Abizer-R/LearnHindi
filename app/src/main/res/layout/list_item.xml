@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:src="@mipmap/ic_launcher_round" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -20,7 +20,7 @@
 
         <TextView
             android:id="@+id/hindiTextView"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
@@ -31,7 +31,7 @@
 
         <TextView
             android:id="@+id/englishTextView"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/hindiTextView"
             android:layout_marginLeft="16dp"
@@ -39,7 +39,16 @@
             android:text="nine"
             android:textColor="@color/white"/>
 
-    </LinearLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_play_arrow_white_24"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp" />
+
+
+    </RelativeLayout>
 
 
 
