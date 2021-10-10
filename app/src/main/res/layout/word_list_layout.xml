@@ -13,6 +13,7 @@
         android:id="@+id/wordListView"
         android:divider="@null"
         android:dividerHeight="4dp"
-        android:layout_margin="4dp"/>
+        android:layout_margin="4dp"
+        android:drawSelectorOnTop="true"/>
 
 </LinearLayout>
