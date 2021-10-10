@@ -2,6 +2,7 @@ package com.example.englishtohindi;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,10 +54,14 @@ public class WordAdaptor extends ArrayAdapter<Word> {
             imageView.setVisibility(View.GONE);
         }
 
-
-        View textContainer = listItemView.findViewById(R.id.textContainer);
+        View list_item = listItemView.findViewById(R.id.list_item);
         int color = ContextCompat.getColor(getContext(), colorReference);
-        textContainer.setBackgroundColor(color);
+        GradientDrawable bgShape = (GradientDrawable) list_item.getBackground();
+        bgShape.setColor(color);
+
+//        View textContainer = listItemView.findViewById(R.id.textContainer);
+//        int color = ContextCompat.getColor(getContext(), colorReference);
+//        textContainer.setBackgroundColor(color);
 
         return listItemView;
     }
