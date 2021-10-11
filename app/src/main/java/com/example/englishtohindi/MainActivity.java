@@ -9,17 +9,14 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView numbersTextView;
-    private TextView familyTextView;
-    private TextView colorsTextView;
-    private TextView phrasesTextView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        numbersTextView = findViewById(R.id.numbersTextView);
+        
+        TextView numbersTextView = findViewById(R.id.numbersTextView);
+
         numbersTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -28,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        familyTextView = findViewById(R.id.familyTextView);
+        TextView familyTextView = findViewById(R.id.familyTextView);
         familyTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -37,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        colorsTextView = findViewById(R.id.colorsTextView);
+        TextView colorsTextView = findViewById(R.id.colorsTextView);
         colorsTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -46,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        phrasesTextView = findViewById(R.id.phrasesTextView);
+        TextView phrasesTextView = findViewById(R.id.phrasesTextView);
         phrasesTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

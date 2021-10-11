@@ -10,8 +10,8 @@
 
     <color name="colorPrimary">#4285F4</color>
     <color name="colorPrimaryVariant">#3367D6</color>
-    <color name="color_numbers">#92BBFF</color>
+    <color name="color_numbers">#78AAFF</color>
     <color name="color_family">#78AAFF</color>
-    <color name="color_colors">#649EFF</color>
-    <color name="color_phrases">#92BBFF</color>
+    <color name="color_colors">#78AAFF</color>
+    <color name="color_phrases">#78AAFF</color>
 </resources>
