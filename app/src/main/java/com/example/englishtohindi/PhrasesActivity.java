@@ -71,7 +71,7 @@ public class PhrasesActivity extends AppCompatActivity {
         phrases.add(new Word("Let’s go.", "चलो चलें", R.raw.phrases_7));
         phrases.add(new Word("Come here", "यहाँ आओ", R.raw.phrases_8));
 
-        WordAdaptor phrasesWordAdaptor = new WordAdaptor(this, phrases, R.color.color_phrases);
+        WordAdaptor phrasesWordAdaptor = new WordAdaptor(this, phrases);
 
         ListView phrasesListView = findViewById(R.id.wordListView);
         phrasesListView.setAdapter(phrasesWordAdaptor);

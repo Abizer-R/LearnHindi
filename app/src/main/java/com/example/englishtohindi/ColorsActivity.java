@@ -69,9 +69,9 @@ public class ColorsActivity extends AppCompatActivity {
         colors.add(new Word("Green", "हरा", R.drawable.color_green, R.raw.color_green));
         colors.add(new Word("Yellow", "पीली", R.drawable.color_mustard_yellow, R.raw.color_yellow));
         colors.add(new Word("Red", "लाल", R.drawable.color_red, R.raw.color_red));
-        colors.add(new Word("White", "सफ़ेद", R.drawable.color_white, R.raw.color_red));
+        colors.add(new Word("White", "सफ़ेद", R.drawable.color_white, R.raw.color_white));
 
-        WordAdaptor colorsWordAdaptor = new WordAdaptor(this, colors, R.color.color_colors);
+        WordAdaptor colorsWordAdaptor = new WordAdaptor(this, colors);
 
         ListView colorsListView = findViewById(R.id.wordListView);
         colorsListView.setAdapter(colorsWordAdaptor);

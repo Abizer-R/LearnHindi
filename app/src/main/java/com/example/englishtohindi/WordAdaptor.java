@@ -18,11 +18,8 @@ import java.util.ArrayList;
 
 public class WordAdaptor extends ArrayAdapter<Word> {
 
-    private int colorReference;
-
-    public WordAdaptor(Activity context, ArrayList<Word> words, int colorReference) {
+    public WordAdaptor(Activity context, ArrayList<Word> words) {
         super(context, 0, words);
-        this.colorReference = colorReference;
     }
 
 
@@ -58,13 +55,9 @@ public class WordAdaptor extends ArrayAdapter<Word> {
         }
 
         View list_item = listItemView.findViewById(R.id.list_item);
-        int color = ContextCompat.getColor(getContext(), colorReference);
+        int color = ContextCompat.getColor(getContext(), R.color.color_1);
         GradientDrawable bgShape = (GradientDrawable) list_item.getBackground();
         bgShape.setColor(color);
-
-//        View textContainer = listItemView.findViewById(R.id.textContainer);
-//        int color = ContextCompat.getColor(getContext(), colorReference);
-//        textContainer.setBackgroundColor(color);
 
         return listItemView;
     }

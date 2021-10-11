@@ -20,28 +20,28 @@
             android:text="@string/numbers"
             style="@style/CategoryStyle"
             android:background="@drawable/rounded_corner"
-            android:backgroundTint="@color/color_numbers"/>
+            android:backgroundTint="@color/color_1"/>
 
         <TextView
             android:id="@+id/familyTextView"
             android:text="@string/family"
             style="@style/CategoryStyle"
             android:background="@drawable/rounded_corner"
-            android:backgroundTint="@color/color_family"/>
+            android:backgroundTint="@color/color_1"/>
 
         <TextView
             android:id="@+id/colorsTextView"
             android:text="@string/colors"
             style="@style/CategoryStyle"
             android:background="@drawable/rounded_corner"
-            android:backgroundTint="@color/color_colors"/>
+            android:backgroundTint="@color/color_1"/>
 
         <TextView
             android:id="@+id/phrasesTextView"
             android:text="@string/phrases"
             style="@style/CategoryStyle"
             android:background="@drawable/rounded_corner"
-            android:backgroundTint="@color/color_phrases"/>
+            android:backgroundTint="@color/color_1"/>
 
     </LinearLayout>
 

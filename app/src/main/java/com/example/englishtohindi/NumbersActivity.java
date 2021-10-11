@@ -74,7 +74,7 @@ public class NumbersActivity extends AppCompatActivity {
         numbers.add(new Word("nine", "नौ", R.drawable.number_nine, R.raw.number_nine));
         numbers.add(new Word("ten", "दस", R.drawable.number_ten, R.raw.number_ten));
 
-        WordAdaptor numbersWordAdaptor = new WordAdaptor(this, numbers, R.color.color_numbers);
+        WordAdaptor numbersWordAdaptor = new WordAdaptor(this, numbers);
 
         ListView numbersListView = findViewById(R.id.wordListView);
         numbersListView.setAdapter(numbersWordAdaptor);
