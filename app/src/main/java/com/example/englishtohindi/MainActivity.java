@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager.setAdapter(pagerAdapter);
 
+        
         // Adding Tabs
         tabLayout.addTab(tabLayout.newTab().setText(R.string.numbers));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.family));
