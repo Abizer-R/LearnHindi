@@ -1,21 +1,24 @@
 package com.example.englishtohindi;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
-import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class ColorsActivity extends AppCompatActivity {
 
-    private ArrayList<Word> colors;
+public class PhrasesFragment extends Fragment {
+
+    private ArrayList<Word> phrases;
 
     private MediaPlayer audio;
 
@@ -49,37 +52,43 @@ public class ColorsActivity extends AppCompatActivity {
                 }
             };
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        releaseMediaPlayer();
+    public void releaseMediaPlayer() {
+
+        if(audio != null)
+            audio.release();
+
+        audio = null;
+
+        mAudioManager.abandonAudioFocus(mOnAudioFocusChangeListener);
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.word_list_layout);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View rootView = inflater.inflate(R.layout.word_list_layout, container, false);
 
-        mAudioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+        mAudioManager = (AudioManager)getActivity().getSystemService(Context.AUDIO_SERVICE);
 
-        colors = new ArrayList<>();
-        colors.add(new Word("Black", "काला", R.drawable.color_black, R.raw.color_black));
-        colors.add(new Word("Brown", "भूरा", R.drawable.color_brown, R.raw.color_brown));
-        colors.add(new Word("Gray", "धूसर, स्लेटी", R.drawable.color_gray, R.raw.color_gray));
-        colors.add(new Word("Green", "हरा", R.drawable.color_green, R.raw.color_green));
-        colors.add(new Word("Yellow", "पीली", R.drawable.color_mustard_yellow, R.raw.color_yellow));
-        colors.add(new Word("Red", "लाल", R.drawable.color_red, R.raw.color_red));
-        colors.add(new Word("White", "सफ़ेद", R.drawable.color_white, R.raw.color_white));
+        phrases = new ArrayList<>();
+        phrases.add(new Word("Where are you going?", "आप कहाँ जा रहे हैं?", R.raw.phrases_1));
+        phrases.add(new Word("What is your name?", "आपका नाम क्या है?", R.raw.phrases_2));
+        phrases.add(new Word("How are you feeling?", "आप कैसा महसूस कर रहे हैं?", R.raw.phrases_3));
+        phrases.add(new Word("I’m feeling good.", "मैं अच्छा महसूस कर रहा हूं", R.raw.phrases_4));
+        phrases.add(new Word("Are you coming?", "क्या आप आ रहे हैं?", R.raw.phrases_5));
+        phrases.add(new Word("Yes, I’m coming", "हां, मैं आ रहा हूं", R.raw.phrases_6));
+        phrases.add(new Word("Let’s go.", "चलो चलें", R.raw.phrases_7));
+        phrases.add(new Word("Come here", "यहाँ आओ", R.raw.phrases_8));
 
-        WordAdaptor colorsWordAdaptor = new WordAdaptor(this, colors);
+        WordAdaptor phrasesWordAdaptor = new WordAdaptor(getActivity(), phrases);
 
-        ListView colorsListView = findViewById(R.id.wordListView);
-        colorsListView.setAdapter(colorsWordAdaptor);
+        ListView phrasesListView = rootView.findViewById(R.id.wordListView);
+        phrasesListView.setAdapter(phrasesWordAdaptor);
 
-        colorsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        phrasesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Word currWord = colors.get(i);
+                Word currWord = phrases.get(i);
 
                 releaseMediaPlayer();
 
@@ -92,26 +101,22 @@ public class ColorsActivity extends AppCompatActivity {
                 if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
                     // We have audio focus now
 
-                    audio = MediaPlayer.create(ColorsActivity.this, currWord.getAudioResourcId());
+                    audio = MediaPlayer.create(getActivity(), currWord.getAudioResourcId());
                     audio.start();
 
                     audio.setOnCompletionListener(audioCompleted);
                 }
 
-
             }
         });
 
+        return rootView;
     }
 
-    public void releaseMediaPlayer() {
+    @Override
+    public void onStop() {
+        super.onStop();
 
-        if(audio != null)
-            audio.release();
-
-        audio = null;
-
-        mAudioManager.abandonAudioFocus(mOnAudioFocusChangeListener);
+        releaseMediaPlayer();
     }
-
 }

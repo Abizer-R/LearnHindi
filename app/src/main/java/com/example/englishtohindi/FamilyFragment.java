@@ -1,19 +1,22 @@
 package com.example.englishtohindi;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.provider.MediaStore;
+
+import androidx.fragment.app.Fragment;
+
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class FamilyActivity extends AppCompatActivity {
+
+public class FamilyFragment extends Fragment {
 
     private ArrayList<Word> family;
 
@@ -49,18 +52,28 @@ public class FamilyActivity extends AppCompatActivity {
                 }
             };
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        releaseMediaPlayer();
+    public void releaseMediaPlayer() {
+
+        if(audio != null)
+            audio.release();
+
+        audio = null;
+
+        mAudioManager.abandonAudioFocus(mOnAudioFocusChangeListener);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.word_list_layout);
+    public FamilyFragment() {
+        // Required empty public constructor
+    }
 
-        mAudioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View rootview = inflater.inflate(R.layout.word_list_layout, container, false);
+
+        mAudioManager = (AudioManager)getActivity().getSystemService(Context.AUDIO_SERVICE);
 
         family = new ArrayList<>();
         family.add(new Word("father", "पिता ", R.drawable.family_father, R.raw.family_father));
@@ -76,9 +89,9 @@ public class FamilyActivity extends AppCompatActivity {
         family.add(new Word("grandfather (mother's father)", "नाना  ", R.drawable.family_grandfather, R.raw.family_nana));
         family.add(new Word("grandmother (mother's mother)", "नानी ", R.drawable.family_grandmother, R.raw.family_nani));
 
-        WordAdaptor familyWordAdaptor = new WordAdaptor(this, family);
+        WordAdaptor familyWordAdaptor = new WordAdaptor(getActivity(), family);
 
-        ListView familyListView = findViewById(R.id.wordListView);
+        ListView familyListView = rootview.findViewById(R.id.wordListView);
         familyListView.setAdapter(familyWordAdaptor);
 
         familyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -97,7 +110,7 @@ public class FamilyActivity extends AppCompatActivity {
                 if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
                     // We have audio focus now
 
-                    audio = MediaPlayer.create(FamilyActivity.this, currWord.getAudioResourcId());
+                    audio = MediaPlayer.create(getActivity(), currWord.getAudioResourcId());
                     audio.start();
 
                     audio.setOnCompletionListener(audioCompleted);
@@ -107,15 +120,13 @@ public class FamilyActivity extends AppCompatActivity {
             }
         });
 
+        return rootview;
     }
 
-    public void releaseMediaPlayer() {
+    @Override
+    public void onStop() {
+        super.onStop();
 
-        if(audio != null)
-            audio.release();
-
-        audio = null;
-
-        mAudioManager.abandonAudioFocus(mOnAudioFocusChangeListener);
+        releaseMediaPlayer();
     }
 }

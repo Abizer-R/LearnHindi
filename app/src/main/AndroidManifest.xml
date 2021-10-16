@@ -9,29 +9,6 @@
         android:roundIcon="@mipmap/ic_learnhindi_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.EnglishToHindi">
-        <activity
-            android:name=".ColorsActivity"
-            android:exported="true"
-            android:parentActivityName=".MainActivity"
-            android:label="@string/colors"/>
-
-        <activity
-            android:name=".FamilyActivity"
-            android:exported="true"
-            android:parentActivityName=".MainActivity"
-            android:label="@string/family"/>
-
-        <activity
-            android:name=".NumbersActivity"
-            android:exported="true"
-            android:parentActivityName=".MainActivity"
-            android:label="@string/numbers"/>
-
-        <activity
-            android:name=".PhrasesActivity"
-            android:exported="true"
-            android:parentActivityName=".MainActivity"
-            android:label="@string/phrases"/>
 
         <activity
             android:name=".MainActivity"

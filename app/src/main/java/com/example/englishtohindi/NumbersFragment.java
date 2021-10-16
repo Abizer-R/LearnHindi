@@ -1,20 +1,22 @@
 package com.example.englishtohindi;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import androidx.fragment.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class PhrasesActivity extends AppCompatActivity {
 
-    private ArrayList<Word> phrases;
+public class NumbersFragment extends Fragment {
+
+    private ArrayList<Word> numbers;
 
     private MediaPlayer audio;
 
@@ -48,38 +50,53 @@ public class PhrasesActivity extends AppCompatActivity {
                 }
             };
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        releaseMediaPlayer();
+    public void releaseMediaPlayer() {
+
+        if(audio != null)
+            audio.release();
+
+        audio = null;
+
+        mAudioManager.abandonAudioFocus(mOnAudioFocusChangeListener);
     }
 
+
+
+    public NumbersFragment() {
+        // Required empty public constructor
+    }
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.word_list_layout);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
 
-        mAudioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+        View rootView = inflater.inflate(R.layout.word_list_layout, container, false);
 
-        phrases = new ArrayList<>();
-        phrases.add(new Word("Where are you going?", "आप कहाँ जा रहे हैं?", R.raw.phrases_1));
-        phrases.add(new Word("What is your name?", "आपका नाम क्या है?", R.raw.phrases_2));
-        phrases.add(new Word("How are you feeling?", "आप कैसा महसूस कर रहे हैं?", R.raw.phrases_3));
-        phrases.add(new Word("I’m feeling good.", "मैं अच्छा महसूस कर रहा हूं", R.raw.phrases_4));
-        phrases.add(new Word("Are you coming?", "क्या आप आ रहे हैं?", R.raw.phrases_5));
-        phrases.add(new Word("Yes, I’m coming", "हां, मैं आ रहा हूं", R.raw.phrases_6));
-        phrases.add(new Word("Let’s go.", "चलो चलें", R.raw.phrases_7));
-        phrases.add(new Word("Come here", "यहाँ आओ", R.raw.phrases_8));
+        mAudioManager = (AudioManager)getActivity().getSystemService(Context.AUDIO_SERVICE);
 
-        WordAdaptor phrasesWordAdaptor = new WordAdaptor(this, phrases);
+        numbers = new ArrayList<>();
+        numbers.add(new Word("one", "एक", R.drawable.number_one, R.raw.number_one));
+        numbers.add(new Word("two", "दो", R.drawable.number_two, R.raw.number_two));
+        numbers.add(new Word("three", "तीन", R.drawable.number_three, R.raw.number_three));
+        numbers.add(new Word("four", "चार", R.drawable.number_four, R.raw.number_four));
+        numbers.add(new Word("five", "पांच", R.drawable.number_five, R.raw.number_five));
+        numbers.add(new Word("six", "छह", R.drawable.number_six, R.raw.number_six));
+        numbers.add(new Word("seven", "सात", R.drawable.number_seven, R.raw.number_seven));
+        numbers.add(new Word("eight", "आठ", R.drawable.number_eight, R.raw.number_eight));
+        numbers.add(new Word("nine", "नौ", R.drawable.number_nine, R.raw.number_nine));
+        numbers.add(new Word("ten", "दस", R.drawable.number_ten, R.raw.number_ten));
 
-        ListView phrasesListView = findViewById(R.id.wordListView);
-        phrasesListView.setAdapter(phrasesWordAdaptor);
+        WordAdaptor numbersWordAdaptor = new WordAdaptor(getActivity(), numbers);
 
-        phrasesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ListView numbersListView = rootView.findViewById(R.id.wordListView);
+        numbersListView.setAdapter(numbersWordAdaptor);
+
+        numbersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Word currWord = phrases.get(i);
+                Word currWord = numbers.get(i);
 
                 releaseMediaPlayer();
 
@@ -92,26 +109,22 @@ public class PhrasesActivity extends AppCompatActivity {
                 if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
                     // We have audio focus now
 
-                    audio = MediaPlayer.create(PhrasesActivity.this, currWord.getAudioResourcId());
+                    audio = MediaPlayer.create(getActivity(), currWord.getAudioResourcId());
                     audio.start();
 
                     audio.setOnCompletionListener(audioCompleted);
                 }
-
             }
         });
 
-
-
+        return rootView;
     }
 
-    public void releaseMediaPlayer() {
+    @Override
+    public void onStop() {
+        super.onStop();
 
-        if(audio != null)
-            audio.release();
-
-        audio = null;
-
-        mAudioManager.abandonAudioFocus(mOnAudioFocusChangeListener);
+        releaseMediaPlayer();
     }
+
 }
