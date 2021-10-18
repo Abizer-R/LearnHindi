@@ -1,7 +1,7 @@
 
 # LearnHindi
 
-An amazing app that will help you to learn some basic words and phrases in Hindi along with proper prounounciation.
+An amazing app that will help you to learn some basic words and phrases in Hindi along with proper pronunciation.
 
 
 ## Installation
